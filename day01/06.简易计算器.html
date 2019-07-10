@@ -8,12 +8,46 @@
     <script src="./lib/vue.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <input type="text" v-model="n1" />
+      <select name="" id="" v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+      <input type="text" v-model="n2" />
+      <input type="button" value="=" @click="calc" />
+      <input type="text" v-model="result" />
+    </div>
     <script>
       var vm = new Vue({
         el: '#app',
-        data: {},
-        methods: {}
+        data: {
+          n1: null,
+          n2: null,
+          result: null,
+          opt: '+'
+        },
+        methods: {
+          calc() {
+            this.result = eval(this.n1 + this.opt + this.n2);
+            /* switch (this.opt) {
+              case '+':
+                this.result = parseInt(this.n1) + parseInt(this.n2);
+                break;
+              case '-':
+                this.result = parseInt(this.n1) - parseInt(this.n2);
+                break;
+              case '*':
+                this.result = parseInt(this.n1) * parseInt(this.n2);
+                break;
+              case '/':
+                this.result = parseInt(this.n1) / parseInt(this.n2);
+                break;
+            } */
+          }
+        }
       });
     </script>
   </body>
