@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+      .inner {
+        height: 150px;
+        background-color: darkcyan;
+      }
+      #outer {
+        padding: 40px;
+        background-color: rgb(49, 212, 34);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="outer" @click="outerHandler">
+        <div class="inner" @click.self="div1Handler">
+          <!-- .stop阻止冒泡 -->
+          <input type="text" value="戳他" @click="btnHandler" />
+        </div>
+      </div>
+
+      <div class="inner" @click="div1Handler">
+        <!-- .stop阻止冒泡 -->
+        <input type="text" value="戳他" @click.stop="btnHandler" />
+      </div>
+
+      <a href="http://www.baidu.com" @click.prevent="linkclick"
+        >有问题,先百度</a
+      >
+      <!-- 使用.capture捕获 -->
+      <div class="inner" @click.capture="div1Handler">
+        <input type="text" value="戳他" @click="btnHandler" />
+      </div>
+
+      <!-- 使用.self只有点击当前元素才会触发事件 -->
+      <div class="inner" @click.self="div1Handler">
+        <input type="text" value="戳他" @click="btnHandler" />
+      </div>
+      <!-- 使用.once只触发一次 -->
+      <a href="http://www.baidu.com" @click.prevent.once="linkclick"
+        >有问题,先百度</a
+      >
+    </div>
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+          div1Handler() {
+            console.log('触发了innerDiv的点击事件');
+          },
+          btnHandler() {
+            console.log('触发了btn按钮的点击事件');
+          },
+          linkclick() {
+            console.log('触发了链接的点击事件');
+          },
+          outerHandler() {
+            console.log('触发了out的点击事件');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+    <script src="./lib/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p v-cloak>++++{{ msg }}----</p>
+      <h4 v-text="msg">++++====</h4>
+      <div v-html="msg2"></div>
+      <!-- 没有闪烁问题 ,会覆盖原本内容-->
+      <!-- <input type="button" value="按钮" v-bind:title="mytitle+'123'" /> -->
+      <!-- <input
+        type="button"
+        id="btn"
+        v-on:click="alert('hello')"
+        value="按钮"
+        :title="mytitle+'123'"
+	  /> -->
+      <input type="button" value="按钮" v-on:click="show" />
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script>
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          msg: '123',
+          msg2: '<h1>哈哈,我是一个大大的H1,我大,我骄傲</h1>',
+          mytitle: '这是一个自定义的title'
+        },
+        methods: {
+          show: function() {
+            alert('Hello');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
