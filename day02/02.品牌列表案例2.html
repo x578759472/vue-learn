@@ -28,7 +28,7 @@
         </label><input type="button" value="添加" @click="add()" class="btn btn-primary">
         <label for="">
           搜索名称关键字:
-          <input type="text" v-focus v-model="keywords" id="search" class="form-control">
+          <input type="text" v-focus="'blue'" v-model="keywords" id="search" class="form-control">
         </label>
 
       </div>
@@ -59,15 +59,26 @@
     </table>
   </div>
   <div id="app2">
-    <h3>{{dt | dateFormat}}</h3>
+    <h3 v-color="'red'" v-font-size="100" v-font-weight="800">{{dt | dateFormat}}</h3>
   </div>
   <script>
     Vue.config.keyCodes.f2 = 113;
     Vue.directive('focus', {
+      bind: function (el, binding) {
+
+      },
       inserted: function (el) {
         el.focus();
+      },
+      updated: function () { alert('updated') }
+    })
+    Vue.directive('color', {
+      bind: function (el, binding) {
+        console.log(binding);
+        el.style.color = binding.value;
       }
     })
+
     //全局过滤器,进行事件格式化
     Vue.filter('dateFormat', function (dateStr, pattern = '') {
       let dt = new Date(dateStr);
@@ -139,7 +150,15 @@
         delCount(item) {
           item.count--;
         }
-      }
+      },
+      /*  directives: {
+         focus: {
+           inserted: function (el) {
+             el.focus();
+           }
+         }
+       } */
+
     });
     var vm2 = new Vue({
       el: '#app2',
@@ -169,6 +188,18 @@
 
             return `${y}/${m}/${d} ${swxw}${hh}:${mm}:${ss}~~~`
           }
+        }
+      },
+      directives: {
+        'font-weight': {
+          bind: function (el, binding) {
+            console.log(binding);
+            el.style['font-weight'] = binding.value;
+          }
+        },
+        'font-size': function (el, binding) {
+          console.log(binding);
+          el.style.fontSize = binding.value + 'px';
         }
       }
     })

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/x578759472/vue-learn#readme",
   "devDependencies": {
+    "@types/vue": "^2.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
