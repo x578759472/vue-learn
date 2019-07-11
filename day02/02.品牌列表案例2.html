@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="./lib/vue.js"></script>
+  <link rel="stylesheet" href="./lib/bootstrap.css">
+</head>
+
+<body>
+  <div id="app">
+    {{1+1}}
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+      </div>
+      <div class="panel-body form-inline">
+        <label for="">
+          Id:
+          <input type="text" v-model="id" class="form-control">
+        </label>
+        <label for="">
+          Name:
+          <input type="text" v-model="name" @keyup.enter.f2="add" class="form-control">
+        </label><input type="button" value="添加" @click="add()" class="btn btn-primary">
+        <label for="">
+          搜索名称关键字:
+          <input type="text" v-focus v-model="keywords" id="search" class="form-control">
+        </label>
+
+      </div>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Count</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in search(keywords)" :key="item.id">
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.ctime |dateFormat() }}</td>
+          <td>{{item.count}}</td>
+          <td> <a @click="del(item.id)">删除</a>
+            <a @click="addCount(item)" class="btn btn-danger">+</a>
+            <a @click="delCount(item)" class="btn btn-danger">-</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="app2">
+    <h3>{{dt | dateFormat}}</h3>
+  </div>
+  <script>
+    Vue.config.keyCodes.f2 = 113;
+    Vue.directive('focus', {
+      inserted: function (el) {
+        el.focus();
+      }
+    })
+    //全局过滤器,进行事件格式化
+    Vue.filter('dateFormat', function (dateStr, pattern = '') {
+      let dt = new Date(dateStr);
+      let y = dt.getFullYear();
+      let m = dt.getMonth() + 1;
+      let d = dt.getDate();
+      if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+        return `${y}/${m}/${d}`
+      } else {
+        let hh = dt.getHours();
+        let mm = dt.getMinutes();
+        let ss = dt.getSeconds();
+        let swxw;
+        if (mm > 12) {
+          hh = hh - 12;
+          swxw = "下午"
+        } else {
+          swxw = "上午"
+        }
+        return `${y}/${m}/${d} ${swxw}${hh}:${mm}:${ss}`
+      }
+    })
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        id: '',
+        name: '',
+        keywords: '',
+        list: [
+          { id: 1, name: '奔驰', ctime: new Date(), count: 0 },
+          { id: 2, name: '宝马', ctime: new Date(), count: 0 },
+
+        ]
+      },
+      methods: {
+        add() {
+          this.list.push({ id: this.id, name: this.name, ctime: new Date(), count: 0 });
+          this.id = this.name = '';
+        },
+        del(id) {
+          let index = this.list.findIndex(item => {
+            if (item.id === id) {
+              return true;
+            }
+          })
+          this.list.splice(index, 1);
+          /* this.list.some((item, index) => {
+            if (item.id === id) {
+              this.list.splice(index, 1);
+              return true;
+            }
+          }) */
+          /* this.list.map((item, index, list) => {
+            if (item.id === id) {
+              list.splice(index, 1);
+            }
+          }); */
+        },
+
+        search(key) {
+          return this.list.filter(item =>
+            // item.name.indexOf(key) != -1
+            item.name.includes(key)
+          );
+        },
+        addCount(item) {
+          item.count++;
+        },
+        delCount(item) {
+          item.count--;
+        }
+      }
+    });
+    var vm2 = new Vue({
+      el: '#app2',
+      data: {
+        dt: new Date()
+      },
+      //局部过滤器
+      filters: {
+        dateFormat: function (dateStr, pattern = '') {
+          let dt = new Date(dateStr);
+          let y = dt.getFullYear();
+          let m = dt.getMonth() + 1;
+          let d = dt.getDate();
+          if (pattern.toLowerCase() === 'yyyy-mm-dd') {
+            return `${y}/${m}/${d}`
+          } else {
+            let hh = dt.getHours();
+            let mm = dt.getMinutes().toString().padStart(2, '0');
+            let ss = dt.getSeconds().toString().padStart(2, '0');
+            let swxw;
+            if (hh > 12) {
+              hh = (hh - 12).toString().padStart(2, '0');
+              swxw = "下午"
+            } else {
+              swxw = "上午"
+            }
+
+            return `${y}/${m}/${d} ${swxw}${hh}:${mm}:${ss}~~~`
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
