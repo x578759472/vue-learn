@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <p id="h3">{{msg}}</p>
+    <input type="button" value="修改msg" @click="msg=msg+1">
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'ok'
+      },
+      methods: {
+        show() {
+          console.log('执行了show方法');
+        }
+      },
+      beforeCreate() {//实例完全创建之前执行
+        // console.log(this.msg);
+        // show();
+        //beforeCreate生命周期函数执行的时候data和methods中的数据都没有初始化
+      },
+      created() {
+        // console.log(this.msg);
+        // this.show();
+        //在created中data和methods都已经被初始化好了
+        //调用method和data最早在created中操作
+      },
+      beforeMount() {//模板在内存编译完成,但是未渲染到页面
+        // console.log(document.getElementById('h3').innerText);
+        //页面中的内容还没有被替换,还是模板字符串
+      },
+      mounted() {
+        //内存中的模板,已经真实的挂载到了页面中
+        //用户已经可以看到渲染好的页面了
+        // console.log(document.getElementById('h3').innerText);
+      },
+      beforeUpdate() {
+        //数据更新时,这时候,界面还没有被更新,页面还是旧数据
+        console.log("页面元素中的数据是" + document.getElementById('h3').innerText);
+        console.log("data中的数据是" + this.msg);
+        //页面和数据未同步
+      },
+      updated() {
+        //页面中的数据已经被更新,是最新的
+        console.log("页面元素中的数据是" + document.getElementById('h3').innerText);
+        console.log("data中的数据是" + this.msg);
+        //页面和数据已经同步了
+      },
+    });
+  </script>
+</body>
+
+</html>
