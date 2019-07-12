@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{msg}} </h1>
+    <com2 @func="show"></com2>
+  </div>
+
+  <template id="tmpl">
+    <div>
+      <h1>这是 子组件</h1>
+      <input @click="myclick" type="button" value="这是子组件中的按钮 - 点击它,触发 父组件传递过来的方法">
+    </div>
+  </template>
+  <script>
+    var com2 = {
+      template: `#tmpl`,
+      data: function () {
+        return {
+          sonmsg: {
+            name: '小头儿子',
+            age: 6
+          }
+        }
+      },
+      methods: {
+        myclick() {
+          this.$emit('func', this.sonmsg);
+          //第一位是父组件绑定给子组件的方法名,后面都是给方法传参
+        }
+      }
+    }
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '123 啊-父组件中的数据',
+        datamsgFormSon: null
+      },
+      methods: {
+        show(data) {
+          this.datamsgFormSon = data;
+          this.msg = '子组件调用自己的方法,方法中调用父组件绑定给子组件的方法修改了父组件中的msg'
+          console.log("调用了父组件身上的 show 方法:---" + data.name + data.age);
+        }
+      },
+      components: {
+        com2
+      }
+    });
+  </script>
+</body>
+
+</html>

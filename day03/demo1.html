@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>Document</title>
+	<script src="./lib/vue.js"></script>
+	<style>
+		.v-enter,
+		.v-leave-to {
+			/* opacity: 0; */
+			transform: translate(30px);
+		}
+
+		.v-enter-to,
+		.v-leave {
+			/* opacity: 1; */
+			transform: translate(0px);
+		}
+
+		.v-enter-active {
+			transition: all 1s ease;
+		}
+
+		.v-leave-active {
+			transition: all 0s ease;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<transition mode="out-in">
+			<input :key="1" type="button" value="on" v-if="flag" @click="bswitch">
+			<input :key="2" type="button" value="off" v-if="!flag" @click="bswitch">
+		</transition>
+
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				flag: true
+			},
+			methods: {
+				bswitch() {
+					this.flag = !this.flag;
+				},
+
+			}
+		});
+	</script>
+</body>
+
+</html>

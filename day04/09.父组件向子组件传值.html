@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>父组件H1</h1>
+    <com1 :parentmsg="msg"></com1>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '123 啊-父组件中的数据'
+      },
+      methods: {},
+      components: {
+
+        com1: {
+          template: `<h1 @click="change">这是子组件{{parentmsg}} {{content}} </h1>`,
+          props: ['parentmsg'],
+          data: function () {
+            return {
+              title: '123',
+              content: 'qqq'
+            }
+          },
+          methods: {
+            change() {
+              this.parentmsg = "被修改了"
+              //可以修改自己props获取到的数据,无法修改父组件数据,并且会报错
+            }
+          },
+        },
+
+      }
+    });
+  </script>
+</body>
+
+</html>
