@@ -1,0 +1,11 @@
+day07-webpack2@1.0.0 /mnt/d/vue/day07-webpack2
+├── font-awesome@4.7.0 
+├── UNMET PEER DEPENDENCY jquery@1.9.1 - 3
+└── UNMET PEER DEPENDENCY popper.js@^1.14.7
+
+npm WARN optional Skipping failed optional dependency /chokidar/fsevents:        
+npm WARN notsup Not compatible with your operating system or architecture: fsevents@1.2.9
+npm WARN bootstrap@4.3.1 requires a peer of jquery@1.9.1 - 3 but none was installed.
+npm WARN bootstrap@4.3.1 requires a peer of popper.js@^1.14.7 but none was installed.
+npm WARN day07-webpack2@1.0.0 No description
+npm WARN day07-webpack2@1.0.0 No repository field.

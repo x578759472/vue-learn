@@ -1,0 +1,18 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.div {
+  width: 500px;
+  height: 200px;
+  background: url('../images/aa.png');
+  background-size: cover;
+}
+.div2 {
+  width: 500px;
+  height: 200px;
+  background: url('../images2/aa.png');
+  background-size: cover;
+}
