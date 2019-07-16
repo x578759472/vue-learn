@@ -8,7 +8,6 @@ import router from './router';
 Vue.use(VueRouter);
 
 const vm = new Vue({
-  el: '#app',
   router,
   render: c => c(app),
-});
+}).$mount('#app');
